@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <div id="firstPage" class="font-cursive bg-cover bg-center h-screen first-page sm:h-screen py-14 flex flex-col items-center text-center"
+        style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+                        url('https://scontent.fmnl17-4.fna.fbcdn.net/v/t39.30808-6/305763145_457907066360270_822097854188042073_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=cc71e4&_nc_eui2=AeF0F10JFKSRInF1WfYwfNzyeT9OS_KbanJ5P05L8ptqcmU7oZF9tPe4DCpYUen5D3js2igC_2HyYKoht4RHDz3E&_nc_ohc=k7RvlgZHTVIQ7kNvgHJwCar&_nc_ht=scontent.fmnl17-4.fna&oh=00_AYDEMUVG6WBrC6MFRvp9_frR_h1S5FylO_-zVSu9PGA2eg&oe=66D965A5');"
+                >
+            <div class="title backdrop-blur-sm h-screen w-full my-auto flex flex-col justify-center">
+                <h1 class="mb-2 text-5xl sm:text-6xl text-white">Stem: Fortitue & Corinthians</h1>
+                <h2 class="sm:text-5xl text-2xl my-5 text-white">Year 2024-2025</h2> 
+            </div> 
+            
+        </div>
+        <!--Second page-->
+        <div class="second-page font-cursive pt-10 h-full bg-cover bg-center bg-no-repeat" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://i.pinimg.com/564x/55/73/57/55735706337f12b8125b73af8abe8302.jpg');">
+            <div class="header flex flex-col sm:flex-row text-center justify-evenly align-middle mb-4">
+               <h1 class="sm:text-5xl text-3xl text-white">Students</h1>
+            <div class="search-contianer m-3 flex bg-green-500 rounded-xl">
+                <input id="findName" class="text-sm py-2 px-2 rounded-tl-xl rounded-bl-xl sm:w-96 w-72" type="text">
+                <button id="surnameBtn" class="text-center w-10 px-3 text-white"><i class="fa-brands fa-searchengin"></i></button>
+            </div> 
+            <select class="rounded-xl px-3 text-center sm:h-10" name="Gender" id="">
+                <option value="Male or Female">Male or Female</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+            </select>
+            </div>
+
+            <div id="students-info-container" class="flex flex-wrap justify-evenly gap-4 pb-6">
+                
+            </div>
+        </div>
+
+        <div id="freedomWall-container" class="h-full bg-gray-400 font-cursive pt-10">
+            <div class="flex flex-col text-center">
+                <h1 class="sm:text-5xl text-3xl">Freedom Wall</h1>
+                <p>Say anything that you wanted to say.</p> 
+                <textarea class="w-72 sm:w-1/3 h-40 mx-auto p-4" name="say" id="sayText"></textarea>
+                <button onclick="postMessage()" class="bg-green-600 w-32 rounded-sm mx-auto mt-2 text-white">Say</button>
+            </div>
+            
+            <div id="theWall" class="relative h-screen w-full overflow-scroll sm:w-full p-5"></div>
+        </div>
+
+        <div id="devMessage" class="font-cursive h-screen bg-gray-300 text-center">
+                <h1 class="p-4 text-2xl">Developers Message</h1>
+                <input id="nameInputDev" type="text" class="p-2 rounded-xl mx-2" placeholder="Enter you Name">
+                <button class="bg-green-400 px-3 py-2 rounded shadow-2xl mt-2 sm:w-20 w-1/2" onclick="sendDevName()">Send</button>
+            <div id="messageInput-container">
+
+                <div class="bg-white h-full w-72 p-4 sm:w-1/2 sm:p-10 m-10 mx-auto justify-start text-justify">
+                    <h1 class="devMessage">Hi pre, musta alam ko hindi tayo masyadong close eh HAHAHHA goodluck sa future mo sana maging okay ka.</h1>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
