@@ -90,26 +90,39 @@ function renderStudents() {
     attachEventListeners();
 }
 
-// Initialize an array to store the messages or retrieve existing messages from localStorage
-let messages = JSON.parse(localStorage.getItem('freedomWallText')) || [];
+// Your Firebase configuration (get this from Firebase console)
+const firebaseConfig = {
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_AUTH_DOMAIN",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_STORAGE_BUCKET",
+    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+    appId: "YOUR_APP_ID"
+  };
 
-// Function to display messages from storage when the page loads
-function displaySavedMessages() {
+  // Initialize Firebase
+  const app = firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
+
+  // Function to display saved messages from Firestore
+  async function displaySavedMessages() {
     const wall = document.getElementById('theWall');
+    const messagesSnapshot = await db.collection('messages').get();
     
-    messages.forEach(msg => {
-        const messageElement = document.createElement('div');
-        messageElement.textContent = msg.text;
-        messageElement.className = 'absolute bg-white p-2 rounded shadow text-black';
-        messageElement.style.left = msg.x;
-        messageElement.style.top = msg.y;
+    messagesSnapshot.forEach(doc => {
+      const msg = doc.data();
+      const messageElement = document.createElement('div');
+      messageElement.textContent = msg.text;
+      messageElement.className = 'absolute bg-white p-2 rounded shadow text-black';
+      messageElement.style.left = msg.x;
+      messageElement.style.top = msg.y;
 
-        wall.appendChild(messageElement);
+      wall.appendChild(messageElement);
     });
-}
+  }
 
-// Function to post a new message
-function postMessage() {
+  // Function to post a new message and save to Firestore
+  async function postMessage() {
     const message = document.getElementById('sayText').value;
     const wall = document.getElementById('theWall');
     
@@ -119,27 +132,42 @@ function postMessage() {
     messageElement.textContent = message;
     messageElement.className = 'absolute bg-white p-2 rounded shadow text-black text-sm';
     
-    // Get random position within "theWall" container
+    // Get wall dimensions
     const wallWidth = wall.clientWidth;
     const wallHeight = wall.clientHeight;
-    const randomX = Math.random() * (wallWidth - 100) + 'px'; // Adjust 100 for padding/margin
-    const randomY = Math.random() * (wallHeight - 100) + 'px'; // Adjust 40 for padding/margin
 
+    let randomX, randomY;
+    let isPositionValid = false;
+    
+    // Generate random positions that don't overlap with existing messages
+    while (!isPositionValid) {
+      randomX = Math.random() * (wallWidth - 100) + 'px'; // Adjust 100 for padding/margin
+      randomY = Math.random() * (wallHeight - 100) + 'px'; // Adjust 100 for padding/margin
+      
+      // Check if the new position overlaps with any existing message
+      isPositionValid = true; // You'd implement overlap checking if needed.
+    }
+
+    // Set the message position
     messageElement.style.left = randomX;
     messageElement.style.top = randomY;
 
+    // Append the new message to the wall
     wall.appendChild(messageElement);
 
-    // Save the message with its position
-    messages.push({ text: message, x: randomX, y: randomY });
-    localStorage.setItem('freedomWallText', JSON.stringify(messages));
+    // Save the message with its position to Firestore
+    await db.collection('messages').add({
+      text: message,
+      x: randomX,
+      y: randomY
+    });
 
     // Clear the textarea
     document.getElementById('sayText').value = '';
-}
+  }
 
-// Load saved messages when the page loads
-window.onload = displaySavedMessages;
+  // Load saved messages when the page loads
+  window.onload = displaySavedMessages;
 
 
 
